@@ -1,0 +1,3 @@
+https://facebook.github.io/create-react-app/docs/adding-a-css-modules-stylesheet
+
+just install react-scripts
