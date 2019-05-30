@@ -3,7 +3,7 @@ import classes from './Burger.css'
 import BurgerIngridient from './BurgerIngridient/BurgerIngridient';
 
 const burger = (props) => {
-    console.log(props.ingredients);
+    //console.log(props.ingredients);
     let objIngredients = props.ingredients;
 
     // Prvo moramo objekat objIngredients da pretvorimo u key:value parove da bi prosli kroz njih
@@ -15,7 +15,7 @@ const burger = (props) => {
 
     let transformedIngredients = Object.keys(objIngredients) // convert Object keys to array like:"meat", "salat"
         .map(ingKey => {
-            // da preacimo u array
+            // da prebacimo u array
             //console.log( objIngredients[ingKey] );  // get values koje prebacujemo u array da bi mogli da ih mapiramo
             //console.log( [...Array( props.ingredients[ingKey])] );  // create Array of as many elements as it is value of the key, cheese:2
             return [...Array( props.ingredients[ingKey])].map((noNeed, i) => { // map(name, index) here we put noNeed since we don't need name since we get it from ingKey

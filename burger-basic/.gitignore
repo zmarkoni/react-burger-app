@@ -17,6 +17,8 @@ yarn-debug.log*
 yarn-error.log*
 
 .idea
+../.idea
 .idea/workspace.xml
 ../.idea/workspace.xml
 ../.idea/misc.xml
+../yarn-error.log
