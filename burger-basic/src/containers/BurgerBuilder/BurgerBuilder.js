@@ -34,6 +34,17 @@ class BurgerBuilder extends Component {
         });
     };
 
+    // Comping from backdrop, when we click on it, and pass throw Modal to BurgerBuilder via props
+    purchaseCancelHandler = () => {
+        this.setState({
+           purchasing: false
+        });
+    };
+
+    purchaseContinueHandler = () => {
+        console.log('you continue');
+    };
+
     updatePurchaseState(ingredients) {
         const sum = Object.keys(ingredients)
             .map(ingKey => {
@@ -113,8 +124,12 @@ class BurgerBuilder extends Component {
 
         return (
             <Aux>
-                <Modal show={this.state.purchasing}>
-                    <OrderSummary ingredients={this.state.ingredients} />
+                <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
+                    <OrderSummary
+                        ingredients={this.state.ingredients}
+                        purchaseContinue={this.purchaseContinueHandler}
+                        purchaseCancel={this.purchaseCancelHandler}
+                    />
                 </Modal>
                 <Burger ingredients={this.state.ingredients} />
                 <BuildControls
