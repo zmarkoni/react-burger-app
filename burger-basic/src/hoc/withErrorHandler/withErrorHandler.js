@@ -10,18 +10,25 @@ const withErrorHandler = (WrappedComponent, axiosInstance) => {
         };
 
         componentWillMount() { // constructor can be used instead!!!
-            axiosInstance.interceptors.request.use(request => {
+            // we want to add it first before Child components can be handled
+            this.requestInterceptor = axiosInstance.interceptors.request.use(request => {
                 this.setState({
                     error: null
                 });
                 return request;
             });
 
-            axiosInstance.interceptors.response.use(response => response, error => {
+            this.responseInterceptor = axiosInstance.interceptors.response.use(response => response, error => {
                 this.setState({
                     error: error // object returned by firebase!
                 });
             });
+        };
+
+        componentWillUnmount() { // if we use functional component, than we will do this in RETURN method of useEffect
+            console.log('Will unmount from withErrorHandler', this.requestInterceptor, this.responseInterceptor);
+            axiosInstance.interceptors.request.eject(this.requestInterceptor);
+            axiosInstance.interceptors.request.eject(this.responseInterceptor);
         };
 
         errorConfirmedHandler = () => {
