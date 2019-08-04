@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import axiosInstance from '../../axios-orders';
 import Aux from '../../hoc/Aux/Aux';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
-
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
+import Spinner from '../../components/UI/Spinner/Spinner';
 // global constant need to be with capital letters
 const INGREDIENT_PRICES = {
     salad: 0.5,
@@ -26,6 +27,7 @@ class BurgerBuilder extends Component {
         totalPrice: 4,  // starting Price
         purchasable: false, // true if there is at least on ingredient chosen
         purchasing: false, // to know is the Order Now button is clicked
+        loading: false
     };
 
     purchaseHandler = () => {
@@ -42,7 +44,32 @@ class BurgerBuilder extends Component {
     };
 
     purchaseContinueHandler = () => {
-        console.log('you continue');
+        //console.log('you continue');
+        this.setState({loading:true});
+
+        const order = {
+            ingredients: this.state.ingredients,
+            prince: this.state.totalPrice, // calculate price on the server better
+            customer: {
+                name: 'Zoran Markovic',
+                address: {
+                    street: 'Test street',
+                    zipCode: '232342',
+                    country: 'Germany'
+                },
+                email: 'test@test.com'
+            },
+            deliverMethod: 'fastest'
+        };
+        axiosInstance.post('/orders.json', order) // will create orders node in firebase database
+            .then(response => {
+                //console.log(response)
+                this.setState({loading:false, purchasing: false}); // close the modal also
+            })
+            .catch(error => {
+                //console.log(error)
+                this.setState({loading:false, purchasing: false}); // close the modal also
+            });
     };
 
     updatePurchaseState(ingredients) {
@@ -122,15 +149,22 @@ class BurgerBuilder extends Component {
         //console.log('disabledInfo: ', disabledInfo);
         //disabledInfo:  {salad: true, bacon: true, cheese: true, meat: true}
 
+        let orderSummary = <OrderSummary
+            ingredients={this.state.ingredients}
+            price={this.state.totalPrice}
+            purchaseContinue={this.purchaseContinueHandler}
+            purchaseCancel={this.purchaseCancelHandler}
+        />;
+
+        if (this.state.loading) {
+           orderSummary = <Spinner />;
+        }
+
+
         return (
             <Aux>
                 <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler} stateCheck={this.state}>
-                    <OrderSummary
-                        ingredients={this.state.ingredients}
-                        price={this.state.totalPrice}
-                        purchaseContinue={this.purchaseContinueHandler}
-                        purchaseCancel={this.purchaseCancelHandler}
-                    />
+                    {orderSummary}
                 </Modal>
                 <Burger ingredients={this.state.ingredients} />
                 <BuildControls
