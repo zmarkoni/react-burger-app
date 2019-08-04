@@ -26,6 +26,7 @@ class BurgerBuilder extends Component {
         error: false
     };
 
+    // https://www.udemy.com/react-the-complete-guide-incl-redux/learn/lecture/8145370#overview
     componentDidMount() {
         axiosInstance.get('https://react-my-burger-e5a66.firebaseio.com/ingredients.json')
             .then(response => {
