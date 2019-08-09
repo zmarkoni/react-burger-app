@@ -3,6 +3,8 @@ import Layout from './hoc/Layout/Layout';
 import BurgerBuilder from "./containers/BurgerBuilder/BurgerBuilder";
 import withErrorHandler from "./hoc/withErrorHandler/withErrorHandler";
 
+import Checkout from "./containers/Checkout/Checkout";
+
 class App extends Component {
 
     // Testing withErrorHandler => componentWillUnmount
@@ -24,6 +26,7 @@ class App extends Component {
         <Layout>
             {/*{this.state.show ? <BurgerBuilder/> : null}*/}
             <BurgerBuilder/>
+            <Checkout/>
         </Layout>
       </div>
     );
