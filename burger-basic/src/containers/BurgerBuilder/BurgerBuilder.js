@@ -60,7 +60,7 @@ class BurgerBuilder extends Component {
         // We will use this commented code inside ContactData component
         // const order = {
         //     ingredients: this.state.ingredients,
-        //     prince: this.state.totalPrice, // calculate price on the server better
+        //     price: this.state.totalPrice, // calculate price on the server better
         //     customer: {
         //         name: 'Zoran Markovic',
         //         address: {

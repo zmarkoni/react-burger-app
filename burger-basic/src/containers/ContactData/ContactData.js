@@ -25,7 +25,7 @@ class ContactData extends Component {
 
         const order = {
             ingredients: this.props.ingredients, // passed from burgerBuilder
-            prince: this.props.price, // passed from burgerBuilder, also calculate price on the server will be better
+            price: this.props.price, // passed from burgerBuilder, also calculate price on the server will be better
             customer: {
                 name: 'Zoran Markovic',
                 address: {
