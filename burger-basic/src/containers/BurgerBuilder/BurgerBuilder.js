@@ -57,7 +57,7 @@ class BurgerBuilder extends Component {
     purchaseContinueHandler = () => {
         //console.log('you continue');
         // this.setState({loading: true});
-        //
+        // We will use this commented code inside ContactData component
         // const order = {
         //     ingredients: this.state.ingredients,
         //     prince: this.state.totalPrice, // calculate price on the server better
@@ -87,6 +87,9 @@ class BurgerBuilder extends Component {
         for (let i in this.state.ingredients) {
             queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
         }
+
+        queryParams.push('price=' + this.state.totalPrice);
+
         const queryString = queryParams.join('&');
         this.props.history.push({
             pathname: '/checkout',
