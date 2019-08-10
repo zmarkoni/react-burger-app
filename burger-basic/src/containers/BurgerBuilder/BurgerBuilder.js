@@ -28,6 +28,7 @@ class BurgerBuilder extends Component {
 
     // https://www.udemy.com/react-the-complete-guide-incl-redux/learn/lecture/8145370#overview
     componentDidMount() {
+        console.log('BurgerBuilder props: ', this.props);
         axiosInstance.get('https://react-my-burger-e5a66.firebaseio.com/ingredients.json')
             .then(response => {
                 this.setState({
@@ -55,32 +56,42 @@ class BurgerBuilder extends Component {
 
     purchaseContinueHandler = () => {
         //console.log('you continue');
-        this.setState({loading: true});
-
-        const order = {
-            ingredients: this.state.ingredients,
-            prince: this.state.totalPrice, // calculate price on the server better
-            customer: {
-                name: 'Zoran Markovic',
-                address: {
-                    street: 'Test street',
-                    zipCode: '232342',
-                    country: 'Germany'
-                },
-                email: 'test@test.com'
-            },
-            deliverMethod: 'fastest'
-        };
-        // simulate network error with /orders.json123
-        axiosInstance.post('/orders.json', order) // will create orders node in firebase database
-            .then(response => {
-                //console.log(response)
-                this.setState({loading: false, purchasing: false}); // close the modal also
-            })
-            .catch(error => {
-                //console.log(error)
-                this.setState({loading: false, purchasing: false}); // close the modal also
-            });
+        // this.setState({loading: true});
+        //
+        // const order = {
+        //     ingredients: this.state.ingredients,
+        //     prince: this.state.totalPrice, // calculate price on the server better
+        //     customer: {
+        //         name: 'Zoran Markovic',
+        //         address: {
+        //             street: 'Test street',
+        //             zipCode: '232342',
+        //             country: 'Germany'
+        //         },
+        //         email: 'test@test.com'
+        //     },
+        //     deliverMethod: 'fastest'
+        // };
+        // // simulate network error with /orders.json123
+        // axiosInstance.post('/orders.json', order) // will create orders node in firebase database
+        //     .then(response => {
+        //         //console.log(response)
+        //         this.setState({loading: false, purchasing: false}); // close the modal also
+        //     })
+        //     .catch(error => {
+        //         //console.log(error)
+        //         this.setState({loading: false, purchasing: false}); // close the modal also
+        //     });
+        // this.props.history.push('/checkout');
+        const queryParams = [];
+        for (let i in this.state.ingredients) {
+            queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
+        }
+        const queryString = queryParams.join('&');
+        this.props.history.push({
+            pathname: '/checkout',
+            search: '?' + queryString
+        });
     };
 
     updatePurchaseState(ingredients) {
