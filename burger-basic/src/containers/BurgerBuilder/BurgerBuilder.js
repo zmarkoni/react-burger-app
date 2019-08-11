@@ -28,7 +28,7 @@ class BurgerBuilder extends Component {
 
     // https://www.udemy.com/react-the-complete-guide-incl-redux/learn/lecture/8145370#overview
     componentDidMount() {
-        console.log('BurgerBuilder props: ', this.props);
+        //console.log('BurgerBuilder props: ', this.props);
         axiosInstance.get('https://react-my-burger-e5a66.firebaseio.com/ingredients.json')
             .then(response => {
                 this.setState({

@@ -7,7 +7,7 @@ class OrderSummary extends Component {
     // Can be functional component, here it is Class only because we test componentDidUpdate
     // Also we can use React
     componentDidUpdate() {
-        console.log('[OrderSummary] Did Update!');
+        //console.log('[OrderSummary] Did Update!');
     }
 
     render() {
