@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
-import Button from '../../components/UI/Button/Button';
-import classes from './ContactData.css';
+import { connect } from 'react-redux';
 import axiosInstance from '../../axios-orders';
+
+import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Input from '../../components/UI/Input/Input';
+
+import classes from './ContactData.css';
 
 class ContactData extends Component {
     state = {
@@ -112,8 +115,8 @@ class ContactData extends Component {
         console.log('formData: ', formData);
 
         const order = {
-            ingredients: this.props.ingredients, // passed from burgerBuilder
-            price: this.props.price, // passed from burgerBuilder, also calculate price on the server will be better
+            ingredients: this.props.ings, // passed from Redux
+            price: this.props.price, // passed from Redux
             orderData: formData
         };
         // simulate network error with /orders.json123
@@ -234,4 +237,11 @@ class ContactData extends Component {
     }
 }
 
-export default ContactData;
+const mapStateToProps = (state) => {
+    return {
+        ings: state.ingredients,
+        price: state.totalPrice
+    }
+};
+
+export default connect(mapStateToProps)(ContactData);

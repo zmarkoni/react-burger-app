@@ -50,18 +50,7 @@ class BurgerBuilder extends Component {
     };
 
     purchaseContinueHandler = () => {
-        const queryParams = [];
-        for (let i in this.props.ings) {
-            queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.props.ings[i]));
-        }
-
-        queryParams.push('price=' + this.props.price);
-
-        const queryString = queryParams.join('&');
-        this.props.history.push({
-            pathname: '/checkout',
-            search: '?' + queryString
-        });
+        this.props.history.push('/checkout');
     };
 
     updatePurchaseState(ingredients) {
@@ -126,19 +115,17 @@ class BurgerBuilder extends Component {
 }
 
 const mapStateToProps = (state) => {
-return {
-    ings:state.ingredients,
-    price: state.totalPrice
-}
+    return {
+        ings: state.ingredients,
+        price: state.totalPrice
+    }
 };
 
 const mapDispatchToProps = (dispatch) => {
-return {
-onIngredientAdded: (ingName) => dispatch({type: actionTypes.ADD_INGREDIENT, ingredientName: ingName}),
-onIngredientRemoved: (ingName) => dispatch({type: actionTypes.REMOVE_INGREDIENT, ingredientName: ingName})
-}
+    return {
+        onIngredientAdded: (ingName) => dispatch({type: actionTypes.ADD_INGREDIENT, ingredientName: ingName}),
+        onIngredientRemoved: (ingName) => dispatch({type: actionTypes.REMOVE_INGREDIENT, ingredientName: ingName})
+    }
 };
-
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(BurgerBuilder, axiosInstance));
