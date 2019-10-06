@@ -23,7 +23,7 @@ class BurgerBuilder extends Component {
     componentDidMount() {
         //console.log('BurgerBuilder props: ', this.props);
 
-        // Will be fixed in Redux later, for it will be hardcoded in Reducer
+        // Will be fixed in Redux later, for now it will be hardcoded in Reducer
         // axiosInstance.get('https://react-my-burger-e5a66.firebaseio.com/ingredients.json')
         //     .then(response => {
         //         this.setState({

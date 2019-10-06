@@ -6,15 +6,18 @@ import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 
 // add Redux
-import { createStore } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 
 import burgerBuilderReducer from './store/reducers/burgerBuilder';
 import registerServiceWorker from './registerServiceWorker';
 
 // reduxDevTools no need to install locally since it is part of Chrome extension
-const reduxDevTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
-const store = createStore(burgerBuilderReducer, reduxDevTools);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(burgerBuilderReducer, composeEnhancers(
+    applyMiddleware(thunk)
+));
 
 const app = (
     <Provider store={store}>
