@@ -12,7 +12,9 @@ import { Provider } from 'react-redux';
 import reducer from './store/reducer';
 import registerServiceWorker from './registerServiceWorker';
 
-const store = createStore(reducer);
+// reduxDevTools no need to install locally since it is part of Chrome extension
+const reduxDevTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
+const store = createStore(reducer, reduxDevTools);
 
 const app = (
     <Provider store={store}>
