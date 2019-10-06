@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import axiosInstance from '../../axios-orders';
+import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 
 import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Input from '../../components/UI/Input/Input';
 
 import classes from './ContactData.css';
+
+import * as actions from '../../store/actions/index';
 
 class ContactData extends Component {
     state = {
@@ -93,16 +96,10 @@ class ContactData extends Component {
             }
         },
         formIsValid: false,
-        loading: false
     };
 
     orderHandler = (event) => {
         event.preventDefault();
-        // here we need access to ingredients which are in parent component,
-        // we can pass them with Route render method
-        //console.log('orderHandler: ', this.props.ingredients);
-
-        this.setState({loading: true});
 
         // get Form data from state orderForm
         // We just need name and value, not config...
@@ -119,19 +116,8 @@ class ContactData extends Component {
             price: this.props.price, // passed from Redux
             orderData: formData
         };
-        // simulate network error with /orders.json123
-        axiosInstance.post('/orders.json', order) // will create orders node in firebase database
-            .then(response => {
-                //console.log(response)
-                this.setState({loading: false}); // close the modal also
-                this.props.history.push('/'); // we don't have history here since for passing Route we have use RENDER
-                // But we can pass it as a PROPS there in Render method!
-            })
-            .catch(error => {
-                //console.log(error)
-                this.setState({loading: false}); // close the modal also
-            });
 
+        this.props.onOrderBurger(order);
     };
 
     checkValidity(value, rules) {
@@ -225,7 +211,7 @@ class ContactData extends Component {
                 <Button buttonType="Success" disabledProp={!this.state.formIsValid}>ORDER</Button>
             </form>
         );
-        if (this.state.loading) {
+        if (this.props.loading) {
             form = <Spinner/>;
         }
         return (
@@ -239,9 +225,16 @@ class ContactData extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        ings: state.ingredients,
-        price: state.totalPrice
+        ings: state.burgerBuilder.ingredients,
+        price: state.burgerBuilder.totalPrice,
+        loading: state.order.loading
     }
 };
 
-export default connect(mapStateToProps)(ContactData);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onOrderBurger: (orderData) => dispatch(actions.purchaseBurger(orderData))
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, axiosInstance));
