@@ -7,17 +7,13 @@ import * as actions from "../../store/actions";
 import Spinner from '../../components/UI/Spinner/Spinner';
 
 class Orders extends Component {
-    // state = {
-    //     orders: [],
-    //     loading: true,
-    // };
 
     componentDidMount() {
         this.props.fetchOrders();
     };
 
     render() {
-        let orders = <Spinner/>;
+        let orders = <Spinner />;
         if (!this.props.loading) {
             orders = (
                 <div>
