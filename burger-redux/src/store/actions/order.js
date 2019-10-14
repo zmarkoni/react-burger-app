@@ -27,7 +27,7 @@ export const purchaseBurger = (orderData) => {
         dispatch(purchaseBurgerStart());
         axiosInstance.post('/orders.json', orderData) // will create orders node in firebase database
             .then(response => {
-                console.log(response.data);
+                //console.log(response.data);
                 dispatch(purchaseBurgerSuccess(response.data.name, orderData));
             })
             .catch(error => {

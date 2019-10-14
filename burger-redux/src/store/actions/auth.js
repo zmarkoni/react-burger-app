@@ -1,6 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from "axios";
-import {fetchIngredientsFailed, setIngredients} from "./burgerBuilder";
+//import {fetchIngredientsFailed, setIngredients} from "./burgerBuilder";
 
 export const authStart = () => {
     return {
@@ -34,11 +34,11 @@ export const auth = (email, password) => {
         // Nece da radi govno
         axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCYwvl_XzNqcmI2vk4soqfEneliUMqPii0', authData)
             .then(response => {
-                console.log(response);
+                //console.log(response);
                dispatch(authSuccess(response.data));
             })
             .catch(error => {
-               console.log(error);
+               //console.log(error);
                dispatch(authFail(error));
             });
     }

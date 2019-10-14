@@ -26,7 +26,7 @@ const withErrorHandler = (WrappedComponent, axiosInstance) => {
         };
 
         componentWillUnmount() { // if we use functional component, than we will do this in RETURN method of useEffect
-            console.log('Will unmount from withErrorHandler', this.requestInterceptor, this.responseInterceptor);
+            //console.log('Will unmount from withErrorHandler', this.requestInterceptor, this.responseInterceptor);
             axiosInstance.interceptors.request.eject(this.requestInterceptor);
             axiosInstance.interceptors.request.eject(this.responseInterceptor);
         };

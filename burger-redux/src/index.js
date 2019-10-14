@@ -7,7 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
 
 // Firebase App (the core Firebase SDK) is always required and must be listed first
-import * as firebase from "firebase/app";
+//import * as firebase from "firebase/app";
 // Add the Firebase products that you want to use
 import "firebase/auth";
 import "firebase/firestore";
@@ -23,8 +23,13 @@ const rootReducer = combineReducers({
     burgerBuilder: burgerBuilderReducer,
     order: orderReducer
 });
+
+// USE Environment variable to for determining whether we’re running in production mode.
+// react-burger-app/burger-redux/config/env.js line 71=>  NODE_ENV: process.env.NODE_ENV || 'development',
+//process.env.NODE_ENV === 'development' ?
+
 // reduxDevTools no need to install locally since it is part of Chrome extension
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 const store = createStore(rootReducer, composeEnhancers(
     applyMiddleware(thunk)
 ));
