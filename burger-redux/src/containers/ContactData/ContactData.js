@@ -6,7 +6,8 @@ import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Input from '../../components/UI/Input/Input';
-import {updateObject} from '../../shared/utility';
+import {updateObject, checkValidity} from '../../shared/utility';
+
 import classes from './ContactData.css';
 
 import * as actions from '../../store/actions/index';
@@ -120,33 +121,6 @@ class ContactData extends Component {
         this.props.onOrderBurger(order);
     };
 
-    checkValidity(value, rules) {
-        let isValid = true;
-
-        if(!rules) {
-            return true;
-        }
-
-        if (rules.required) {
-            isValid = value.trim() !== '' && isValid
-        }
-
-        if (rules.minLength) {
-            isValid = value.length >= rules.minLength && isValid
-        }
-
-        if (rules.maxLength) {
-            isValid = value.length <= rules.maxLength && isValid
-        }
-
-        if (rules.type) {
-            isValid = typeof Number(value) === rules.type && isValid
-        }
-
-        return isValid;
-
-    }
-
     inputChangedHandler = (event, inputIndetifier) => {
         //console.log(event.target.value);
         event.preventDefault();
@@ -154,7 +128,7 @@ class ContactData extends Component {
         // TWO-WAY data binding!!!
         const updatedFormElement = updateObject(this.state.orderForm[inputIndetifier], {
            value: event.target.value,
-            valid: this.checkValidity(event.target.value, this.state.orderForm[inputIndetifier].validation),
+            valid: checkValidity(event.target.value, this.state.orderForm[inputIndetifier].validation),
             touched: true
         });
 
