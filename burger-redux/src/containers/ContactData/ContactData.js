@@ -6,7 +6,7 @@ import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Input from '../../components/UI/Input/Input';
-
+import {updateObject} from '../../shared/utility';
 import classes from './ContactData.css';
 
 import * as actions from '../../store/actions/index';
@@ -77,7 +77,7 @@ class ContactData extends Component {
                 },
                 value: '',
                 validation: {
-                    required: true
+                    required: true,
                 },
                 valid: false,
                 touched: false
@@ -152,29 +152,21 @@ class ContactData extends Component {
         event.preventDefault();
 
         // TWO-WAY data binding!!!
+        const updatedFormElement = updateObject(this.state.orderForm[inputIndetifier], {
+           value: event.target.value,
+            valid: this.checkValidity(event.target.value, this.state.orderForm[inputIndetifier].validation),
+            touched: true
+        });
 
-        const updatedOrderForm = {
-            ...this.state.orderForm // Not good enouf, we need deep clone of object here since we have nested objects inside as well
-            // this will only clone parent object properties like: name, email...
-        };
-        //console.log('updatedOrderForm: ', updatedOrderForm);
-
-        // here we will copy nested objects as well
-        const updatedFormElement = {
-            ...updatedOrderForm[inputIndetifier]
-        };
-
-        updatedFormElement.value = event.target.value;
-        updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
-        updatedFormElement.touched = true;
-        updatedOrderForm[inputIndetifier] = updatedFormElement;
-        console.log('updatedFormElement: ', updatedFormElement);
+        const updatedOrderForm = updateObject(this.state.orderForm, {
+            [inputIndetifier]: updatedFormElement
+        });
 
         let formIsValid = true;
         for(let inputIndetifier in updatedOrderForm) {
             formIsValid = updatedOrderForm[inputIndetifier].valid && formIsValid;
         }
-        console.log('formIsValid: ', formIsValid);
+        //console.log('formIsValid: ', formIsValid);
 
         this.setState({
             orderForm: updatedOrderForm,
