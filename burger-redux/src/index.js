@@ -6,18 +6,34 @@ import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
 
-// Firebase App (the core Firebase SDK) is always required and must be listed first
-//import * as firebase from "firebase/app";
-// Add the Firebase products that you want to use
-import "firebase/auth";
-import "firebase/firestore";
-
 // add Redux
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import burgerBuilderReducer from './store/reducers/burgerBuilder';
 import orderReducer from './store/reducers/order';
+
+// No need to init firebase !!!
+// It is working with AXIOS only
+
+// Firebase App (the core Firebase SDK) is always required and must be listed first
+// import * as firebase from "firebase/app";
+// // Add the Firebase products that you want to use
+// import "firebase/auth";
+// import "firebase/firestore";
+
+// const firebaseConfig = {
+//   apiKey: "AIzaSyCYwvl_XzNqcmI2vk4soqfEneliUMqPii0",
+//   authDomain: "react-my-burger-e5a66.firebaseapp.com",
+//   databaseURL: "https://react-my-burger-e5a66.firebaseio.com",
+//   projectId: "react-my-burger-e5a66",
+//   storageBucket: "react-my-burger-e5a66.appspot.com",
+//   messagingSenderId: "388443771500",
+//   appId: "1:388443771500:web:a9541206e3050a29663e49"
+// };
+
+// Initialize Firebase
+//firebase.initializeApp(firebaseConfig);
 
 const rootReducer = combineReducers({
     burgerBuilder: burgerBuilderReducer,
@@ -33,19 +49,6 @@ const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX
 const store = createStore(rootReducer, composeEnhancers(
     applyMiddleware(thunk)
 ));
-
-// const firebaseConfig = {
-//   apiKey: "AIzaSyCYwvl_XzNqcmI2vk4soqfEneliUMqPii0",
-//   authDomain: "react-my-burger-e5a66.firebaseapp.com",
-//   databaseURL: "https://react-my-burger-e5a66.firebaseio.com",
-//   projectId: "react-my-burger-e5a66",
-//   storageBucket: "react-my-burger-e5a66.appspot.com",
-//   messagingSenderId: "388443771500",
-//   appId: "1:388443771500:web:a9541206e3050a29663e49"
-// };
-//
-// // Initialize Firebase
-// firebase.initializeApp(firebaseConfig);
 
 const app = (
     <Provider store={store}>
