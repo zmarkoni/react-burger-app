@@ -22,10 +22,10 @@ export const purchaseBurgerStart = () => {
     }
 };
 
-export const purchaseBurger = (orderData) => {
+export const purchaseBurger = (orderData, token) => {
     return dispatch => {
         dispatch(purchaseBurgerStart());
-        axiosInstance.post('/orders.json', orderData) // will create orders node in firebase database
+        axiosInstance.post('/orders.json?auth=' + token, orderData) // will create orders node in firebase database
             .then(response => {
                 //console.log(response.data);
                 dispatch(purchaseBurgerSuccess(response.data.name, orderData));
@@ -64,10 +64,10 @@ export const fetchOrdersStart = () => {
     }
 };
 
-export const fetchOrders = () => {
+export const fetchOrders = (token) => {
     return dispatch => {
         dispatch(fetchOrdersStart());
-        axiosInstance.get('/orders.json')
+        axiosInstance.get('/orders.json?auth=' + token)
             .then(res => {
                 //console.log('Orders from firebase: ', res.data); // we are getting Object from firebase
                 const fetchedOrders = [];

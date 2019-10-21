@@ -12,32 +12,12 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import burgerBuilderReducer from './store/reducers/burgerBuilder';
 import orderReducer from './store/reducers/order';
-
-// No need to init firebase !!!
-// It is working with AXIOS only
-
-// Firebase App (the core Firebase SDK) is always required and must be listed first
-// import * as firebase from "firebase/app";
-// // Add the Firebase products that you want to use
-// import "firebase/auth";
-// import "firebase/firestore";
-
-// const firebaseConfig = {
-//   apiKey: "AIzaSyCYwvl_XzNqcmI2vk4soqfEneliUMqPii0",
-//   authDomain: "react-my-burger-e5a66.firebaseapp.com",
-//   databaseURL: "https://react-my-burger-e5a66.firebaseio.com",
-//   projectId: "react-my-burger-e5a66",
-//   storageBucket: "react-my-burger-e5a66.appspot.com",
-//   messagingSenderId: "388443771500",
-//   appId: "1:388443771500:web:a9541206e3050a29663e49"
-// };
-
-// Initialize Firebase
-//firebase.initializeApp(firebaseConfig);
+import authReducer from './store/reducers/auth';
 
 const rootReducer = combineReducers({
     burgerBuilder: burgerBuilderReducer,
-    order: orderReducer
+    order: orderReducer,
+    auth: authReducer
 });
 
 // USE Environment variable to for determining whether we’re running in production mode.
