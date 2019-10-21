@@ -23,7 +23,7 @@ export const authFail = (error) => {
     };
 };
 
-export const auth = (email, password) => {
+export const auth = (email, password, isSignup) => {
     return dispatch => {
         dispatch(authStart());
         const authData = {
@@ -31,8 +31,21 @@ export const auth = (email, password) => {
             password: password.value,
             returnSecureToken: true
         };
-        // https://firebase.google.com/docs/reference/rest/auth#section-create-email-password
-        axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCYwvl_XzNqcmI2vk4soqfEneliUMqPii0', authData)
+        //https://firebase.google.com/docs/reference/rest/auth
+        let myAppApiKey = 'AIzaSyCYwvl_XzNqcmI2vk4soqfEneliUMqPii0';
+        let firebaseSignUp = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=';
+        let firebaseSignIn = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=';
+        let url = '';
+
+        if (isSignup) {
+            url = firebaseSignUp + myAppApiKey;
+        } else {
+            url = firebaseSignIn + myAppApiKey;
+        }
+
+        console.log('url: ', url);
+
+        axios.post(url, authData)
             .then(response => {
                 //console.log(response);
                dispatch(authSuccess(response.data));
