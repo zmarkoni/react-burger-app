@@ -17,6 +17,10 @@ const asyncAuth = asyncComponent(() => {
     return import('./containers/Auth/Auth');
 });
 
+const asyncLogout = asyncComponent(() => {
+    return import('./containers/Auth/Logout/Logout');
+});
+
 class App extends Component {
 
     render() {
@@ -27,6 +31,7 @@ class App extends Component {
                 <Route path="/checkout" component={asyncCheckout} />
                 <Route path="/orders" component={asyncOrders} />
                 <Route path="/auth" component={asyncAuth} />
+                <Route path="/logout" component={asyncLogout} />
                 <Route path="/" exact component={BurgerBuilder} />
             </Switch>
         </Layout>
