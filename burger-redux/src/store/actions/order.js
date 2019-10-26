@@ -64,10 +64,11 @@ export const fetchOrdersStart = () => {
     }
 };
 
-export const fetchOrders = (token) => {
+export const fetchOrders = (token, userId) => {
     return dispatch => {
         dispatch(fetchOrdersStart());
-        axiosInstance.get('/orders.json?auth=' + token)
+        const queryParams = '?auth=' + token + '&orderBy="userId"&equalTo="' + userId + '"';
+        axiosInstance.get( '/orders.json' + queryParams)
             .then(res => {
                 //console.log('Orders from firebase: ', res.data); // we are getting Object from firebase
                 const fetchedOrders = [];

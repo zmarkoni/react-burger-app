@@ -9,7 +9,7 @@ const withErrorHandler = (WrappedComponent, axiosInstance) => {
             error: null
         };
 
-        componentWillMount() { // constructor can be used instead!!!
+        UNSAFE_componentWillMount() { // constructor can be used instead!!!
             // we want to add it first before Child components can be handled
             this.requestInterceptor = axiosInstance.interceptors.request.use(request => {
                 this.setState({
@@ -50,7 +50,7 @@ const withErrorHandler = (WrappedComponent, axiosInstance) => {
                 </Aux>
             )
         }
-    }
+    };
 };
 
 export default withErrorHandler;
