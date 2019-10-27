@@ -1,3 +1,7 @@
+// Project Console: https://console.firebase.google.com/project/react-my-burger-e5a66/overview
+// Hosting URL: https://react-my-burger-e5a66.firebaseapp.com
+
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 
