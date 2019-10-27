@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import {Redirect} from "react-router-dom";
+import {connect} from "react-redux";
+import * as actions from '../../store/actions/index';
+
+import classes from './Auth.css';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
-import classes from './Auth.css';
-import * as actions from '../../store/actions/index';
-import {connect} from "react-redux";
-import {updateObject, checkValidity} from '../../shared/utility';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import {updateObject, checkValidity} from '../../shared/utility';
 
 class Auth extends Component {
 
@@ -145,8 +146,8 @@ const mapStateToProps = (state) => {
         loading: state.auth.loading,
         error: state.auth.error,
         isAuthenticated: state.auth.token !== null,
-        buildingBurger: state.burgerBuilder.building,
-        authRedirectPath: state.auth.authRedirectPath
+        authRedirectPath: state.auth.authRedirectPath,
+        buildingBurger: state.burgerBuilder.building
     }
 };
 const mapDispatchToProps = (dispatch) => {
