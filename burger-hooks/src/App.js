@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useEffect} from 'react';
 import asyncComponent from "./hoc/asyncComponent/asyncComponent";
 import {Route, Switch, withRouter, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
@@ -23,42 +23,40 @@ const asyncLogout = asyncComponent(() => {
     return import('./containers/Auth/Logout/Logout');
 });
 
-class App extends Component {
+const app = (props) => {
 
-    componentDidMount() {
-        this.props.onTryAutoSignUp();
-    }
+    useEffect(() => {
+        props.onTryAutoSignUp();
+    }, []);
 
-    render() {
+    let routes = (
+        <Switch>
+            <Route path="/auth" component={asyncAuth}/>
+            <Route path="/" exact component={BurgerBuilder}/>
+            <Redirect to="/"/>
+        </Switch>
+    );
 
-        let routes = (
+    if (props.isAuthenticated) {
+        routes = (
             <Switch>
-                <Route path="/auth" component={asyncAuth}/>
+                <Route path="/checkout" component={asyncCheckout}/>
+                <Route path="/orders" component={asyncOrders}/>
+                <Route path="/logout" component={asyncLogout}/>
                 <Route path="/" exact component={BurgerBuilder}/>
-                <Redirect to="/" />
+                <Redirect to="/"/>
             </Switch>
         );
-
-        if (this.props.isAuthenticated) {
-            routes = (
-                <Switch>
-                    <Route path="/checkout" component={asyncCheckout}/>
-                    <Route path="/orders" component={asyncOrders}/>
-                    <Route path="/logout" component={asyncLogout}/>
-                    <Route path="/" exact component={BurgerBuilder}/>
-                    <Redirect to="/" />
-                </Switch>
-            );
-        }
-
-        return (
-            <div>
-                <Layout>
-                    {routes}
-                </Layout>
-            </div>
-        );
     }
+
+    return (
+        <div>
+            <Layout>
+                {routes}
+            </Layout>
+        </div>
+    );
+
 }
 
 const mapStateToProps = (state) => {
@@ -73,4 +71,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(app));
