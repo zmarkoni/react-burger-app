@@ -24,9 +24,11 @@ const Logout = React.lazy(() => {
 
 const app = (props) => {
 
+    const { onTryAutoSignUp } = props;
+
     useEffect(() => {
-        props.onTryAutoSignUp();
-    }, []);
+        onTryAutoSignUp();
+    }, [onTryAutoSignUp]);
 
     let routes = (
         <Switch>

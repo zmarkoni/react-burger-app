@@ -17,10 +17,11 @@ const burgerBuilder = (props) => {
     // this is UI state only, no need for Redux
     const [purchasing, setPurchasing] = useState(false); // to know is the Order Now button is clicked
 
+    const { onInitIngredients } = props;
     useEffect(() => {
         //console.log('[BurgerBuilder componentDidMount]', props);
-        props.onInitIngredients();
-    }, []);
+        onInitIngredients();
+    }, [onInitIngredients]);
 
     const purchaseHandler = () => {
         if (props.isAuthenticated) {
