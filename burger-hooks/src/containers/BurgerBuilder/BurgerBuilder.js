@@ -17,6 +17,7 @@ const burgerBuilder = (props) => {
     // this is UI state only, no need for Redux
     const [purchasing, setPurchasing] = useState(false); // to know is the Order Now button is clicked
 
+    // instead of mapDispatchToProps
     const dispatch = useDispatch();
     const onIngredientAdded = (ingName) => dispatch(actions.addIngredient(ingName));
     const onIngredientRemoved = (ingName) => dispatch(actions.removeIngredient(ingName));
@@ -24,6 +25,7 @@ const burgerBuilder = (props) => {
     const onInitPurchase = () => dispatch(actions.purchaseInit());
     const onSetAuthRedirectPath = (path) => dispatch(actions.setAuthRedirectPath(path));
 
+    // instead of mapStateToProps
     const ings = useSelector(state => {
         return state.burgerBuilder.ingredients;
     });
